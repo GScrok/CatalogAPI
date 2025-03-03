@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using CatalogAPI.mapper;
 using CatalogAPI.Models.Context;
 using CatalogAPI.Models.Seeder;
+using CatalogAPI.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,12 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseInMemoryDatabase("CatalogoDb"));
 
 # endregion 
+
+
+# region Registrando Repositorios
+builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
+builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
+# endregion
 
 builder.Services.AddAutoMapper(typeof(MappingProfiles));
 
@@ -41,7 +48,6 @@ using (var scope = app.Services.CreateScope())
 
     DbSeeder.Initialize(dbContext);
 }
-
 # endregion
 
 app.Run();
