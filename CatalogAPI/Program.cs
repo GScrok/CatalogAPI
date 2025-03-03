@@ -5,6 +5,7 @@ using CatalogAPI.mapper;
 using CatalogAPI.Models.Context;
 using CatalogAPI.Models.Seeder;
 using CatalogAPI.Repositories;
+using CatalogAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,11 +15,15 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 # endregion 
 
-
 # region Registrando Repositorios
 builder.Services.AddScoped<IProdutoRepository, ProdutoRepository>();
 builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
 # endregion
+
+# region Registrando Services
+builder.Services.AddScoped<IProdutoService, ProdutoService>();
+builder.Services.AddScoped<ICategoriaService, CategoriaService>();
+#endregion
 
 builder.Services.AddAutoMapper(typeof(MappingProfiles));
 
