@@ -28,6 +28,10 @@ namespace CatalogAPI.Services
         public ProdutoDTO ObterPorId(Guid id)
         {
             var produto = _produtoRepository.ObterPorId(id);
+            if (produto == null)
+            {
+                throw new ProdutoNaoEncontradoException("O produto com o ID informado não foi encontrado.");
+            }
             return _mapper.Map<ProdutoDTO>(produto);
         }
         public List<ProdutoDTO> ObterProdutosPorCategoria(Guid categoriaId)

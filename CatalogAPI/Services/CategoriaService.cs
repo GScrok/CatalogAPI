@@ -28,6 +28,10 @@ namespace CatalogAPI.Services
         public CategoriaDTO ObterPorId(Guid id)
         {
             var categoria = _categoriaRepository.ObterPorId(id);
+            if (categoria == null)
+            {
+                throw new CategoriaNaoEncontradaException("A categoria com o ID informado não foi encontrado.");
+            }
             return _mapper.Map<CategoriaDTO>(categoria);
         }
 
