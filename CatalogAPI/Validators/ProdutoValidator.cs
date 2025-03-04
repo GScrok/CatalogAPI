@@ -12,12 +12,12 @@ namespace CatalogAPI.Validators
                 .MinimumLength(3).WithMessage("O nome do produto deve ter no mínimo 3 caracteres.");
 
             RuleFor(p => p.Preco)
-                .NotEmpty().WithMessage("O preço do produto é obrigatório.")
+                .NotNull().WithMessage("O preço do produto é obrigatório.")
                 .GreaterThan(0).WithMessage("O preço do produto deve ser maior que zero.");
 
             RuleFor(p => p.Estoque)
-                .NotEmpty().WithMessage("A quantidade do produto é obrigatória.")
-                .GreaterThanOrEqualTo(0).WithMessage("O estoque não pode ser negativo.");
+                .NotNull().WithMessage("A quantidade do produto é obrigatória.")
+                .GreaterThanOrEqualTo(0).WithMessage("A quantidade do produto não pode ser negativa.");
 
             RuleFor(p => p.CategoriaId)
                 .NotEmpty().WithMessage("O produto deve pertencer a uma categoria.");
