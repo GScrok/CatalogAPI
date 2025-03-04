@@ -1,5 +1,6 @@
 ﻿using CatalogAPI.Models.Context;
 using CatalogAPI.Models;
+using System.Linq;
 
 namespace CatalogAPI.Repositories
 {
@@ -15,6 +16,12 @@ namespace CatalogAPI.Repositories
         public List<Categoria> ObterTodos()
         {
             return _context.Categorias.ToList();
+        }
+
+        public Categoria ObterPorNome(string nome)
+        {
+            return _context.Categorias
+                .Where(c => c.Nome.Equals(nome, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
         }
 
         public Categoria ObterPorId(Guid id)

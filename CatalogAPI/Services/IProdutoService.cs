@@ -7,8 +7,9 @@ namespace CatalogAPI.Services
         List<ProdutoDTO> ObterTodos();
         ProdutoDTO ObterPorId(Guid id);
         ProdutoDTO CriarProduto(PostProdutoDTO criarProdutoDTO);
-        ProdutoDTO AtualizarProduto(Guid id, PostProdutoDTO atualizarProdutoDTO);
+        ProdutoDTO AtualizarProduto(Guid id, PostProdutoDTO atualizarProdutoDTO, bool requisicaoEspecial);
         void RemoverProduto(Guid id);
         List<ProdutoDTO> ObterProdutosPorCategoria(Guid categoriaId);
+        ProdutoDTO AtualizarEstoque(Guid id, int novoEstoque, bool requisicaoEspecial);
     }
 }

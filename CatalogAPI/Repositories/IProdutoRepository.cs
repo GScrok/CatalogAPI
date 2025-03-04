@@ -6,6 +6,7 @@ namespace CatalogAPI.Repositories
     {
         List<Produto> ObterTodos();
         Produto ObterPorId(Guid id);
+        Produto ObterPorNome(string categoriaId);
         Produto Adicionar(Produto produto);
         Produto Atualizar(Produto produto);
         void Remover(Produto produto);

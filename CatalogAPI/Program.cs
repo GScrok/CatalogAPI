@@ -1,4 +1,6 @@
 using AutoMapper;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 
 using CatalogAPI.mapper;
@@ -6,6 +8,7 @@ using CatalogAPI.Models.Context;
 using CatalogAPI.Models.Seeder;
 using CatalogAPI.Repositories;
 using CatalogAPI.Services;
+using CatalogAPI.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +28,17 @@ builder.Services.AddScoped<IProdutoService, ProdutoService>();
 builder.Services.AddScoped<ICategoriaService, CategoriaService>();
 #endregion
 
+#region Registrando FluentValidation 
+builder.Services.AddFluentValidationAutoValidation()
+.AddFluentValidationClientsideAdapters();
+
+builder.Services.AddValidatorsFromAssemblyContaining<ProdutoValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<CategoriaValidator>();
+#endregion
+
+
+builder.Services.AddSingleton<IExceptionManager, ExceptionManager>();
+
 builder.Services.AddAutoMapper(typeof(MappingProfiles));
 
 builder.Services.AddControllers();
@@ -42,8 +56,10 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
 app.MapControllers();
+
+// Registrando o middleware de exception handling
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 # region DbSeeder
 using (var scope = app.Services.CreateScope())

@@ -16,6 +16,11 @@ namespace CatalogAPI.Repositories
         {
             return _context.Produtos.ToList();
         }
+        public Produto ObterPorNome(string nome)
+        {
+            return _context.Produtos
+                .Where(p => p.Nome.Equals(nome, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+        }
 
         public Produto ObterPorId(Guid id)
         {
@@ -48,5 +53,6 @@ namespace CatalogAPI.Repositories
                 .Where(p => p.CategoriaId == categoriaId)
                 .ToList();
         }
+
     }
 }

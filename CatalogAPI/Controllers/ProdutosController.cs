@@ -48,36 +48,28 @@ namespace CatalogAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult AtualizarProduto(Guid id, [FromBody] PostProdutoDTO atualizarProdutoDTO)
+        public IActionResult AtualizarProduto(Guid id, [FromBody] PostProdutoDTO atualizarProdutoDTO, bool requisicaoEspecial = false)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            var produto = _produtoService.AtualizarProduto(id, atualizarProdutoDTO, requisicaoEspecial);
+            return Ok(produto);
+        }
 
-            try
-            {
-                var produto = _produtoService.AtualizarProduto(id, atualizarProdutoDTO);
-                return Ok(produto);
-            }
-            catch (Exception ex)
-            {
-                return NotFound(ex.Message);
-            }
+        [HttpPatch("{id}/estoque")]
+        public IActionResult AtualizarEstoque(Guid id, int novoEstoque, bool requisicaoEspecial = false)
+        {
+            var produto = _produtoService.AtualizarEstoque(id, novoEstoque, requisicaoEspecial);
+            return Ok(produto);
         }
 
         [HttpDelete("{id}")]
         public IActionResult RemoverProduto(Guid id)
         {
-            try
-            {
-                _produtoService.RemoverProduto(id);
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return NotFound(ex.Message);
-            }
+            _produtoService.RemoverProduto(id);
+            return NoContent();
         }
 
         [HttpGet("{id}/categorias")]
